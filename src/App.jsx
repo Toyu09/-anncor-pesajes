@@ -108,7 +108,7 @@ export default function App() {
     try {
       const pageWidth = doc.internal.pageSize.getWidth();
       // ruta a la imagen en carpeta public
-      doc.addImage("/ancordfot.png", "PNG", pageWidth - 100, 20, 80, 40);
+      doc.addImage("/ancordfot.png", "PNG", pageWidth - 100, 20, 100, 60);
     } catch (e) {
       console.warn("No se pudo agregar la imagen:", e);
     }
