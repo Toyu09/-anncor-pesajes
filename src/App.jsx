@@ -118,8 +118,8 @@ export default function App() {
 
     // === Insertar logo ===
     const img = new Image();
-    img.src = "ancordfot.png"; // si lo guardaste en public/logo.png
-    doc.addImage(img, "PNG", doc.internal.pageSize.width - 120, 20, 80, 40);
+    img.src = "ancordfot.JPG"; 
+    doc.addImage(img, "JPEG", doc.internal.pageSize.width - 120, 20, 80, 40);
 
     try {
       autoTable(doc, {
