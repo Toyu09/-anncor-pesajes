@@ -1,68 +1,133 @@
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* ===== Paleta y base ===== */
+:root{
+  --neutral-50: #fafafa;
+  --neutral-100:#f5f5f5;
+  --neutral-200:#e5e5e5;
+  --neutral-500:#737373;
+  --neutral-600:#525252;
+  --neutral-700:#404040;
+  --neutral-900:#171717;
+  --emerald-600:#059669;
+  --emerald-700:#047857;
+  --red-600:#dc2626;
+  --red-700:#b91c1c;
+  --radius-xl: 0.75rem;
+  --radius-2xl: 1rem;
+  --shadow: 0 10px 15px -3px rgba(0,0,0,.1), 0 4px 6px -4px rgba(0,0,0,.1);
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+*{box-sizing:border-box}
+html,body,#root{height:100%}
+body{
+  margin:0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+  color: var(--neutral-900);
+  background: var(--neutral-50);
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+/* ===== Utilidades equivalentes ===== */
+.min-h-screen{min-height:100vh}
+.bg-neutral-50{background:var(--neutral-50)}
+.text-neutral-900{color:var(--neutral-900)}
+.text-neutral-700{color:var(--neutral-700)}
+.text-neutral-600{color:var(--neutral-600)}
+.text-neutral-500{color:var(--neutral-500)}
+.text-emerald-700{color:var(--emerald-700)}
+.text-red-700{color:var(--red-700)}
+.bg-neutral-900{background:var(--neutral-900)}
+.bg-emerald-600{background:var(--emerald-600)}
+.text-white{color:#fff}
+
+.p-3{padding:0.75rem}
+.p-4{padding:1rem}
+.p-6{padding:1.5rem}
+.px-3{padding-left:.75rem;padding-right:.75rem}
+.px-4{padding-left:1rem;padding-right:1rem}
+.py-2{padding-top:.5rem;padding-bottom:.5rem}
+.mb-4{margin-bottom:1rem}
+.mb-10{margin-bottom:2.5rem}
+.mt-3{margin-top:.75rem}
+.mx-auto{margin-left:auto;margin-right:auto}
+.w-full{width:100%}
+
+.max-w-3xl{max-width:48rem}
+.rounded-xl{border-radius:var(--radius-xl)}
+.rounded-2xl{border-radius:var(--radius-2xl)}
+.shadow{box-shadow:var(--shadow)}
+.border{border:1px solid var(--neutral-200)}
+
+.flex{display:flex}
+.grid{display:grid}
+.items-center{align-items:center}
+.justify-between{justify-content:space-between}
+.gap-2{gap:.5rem}
+.gap-3{gap:.75rem}
+.font-bold{font-weight:700}
+.font-semibold{font-weight:600}
+.text-2xl{font-size:1.5rem;line-height:2rem}
+.text-lg{font-size:1.125rem;line-height:1.75rem}
+.text-sm{font-size:.875rem;line-height:1.25rem}
+.underline{text-decoration:underline}
+.text-right{text-align:right}
+.overflow-auto{overflow:auto}
+
+button{
+  cursor:pointer;
+  border: none;
+}
+button.border{border:1px solid var(--neutral-200); background:#fff}
+button.shadow{box-shadow:var(--shadow)}
+button.rounded-2xl{border-radius:var(--radius-2xl)}
+button:disabled{opacity:.6;cursor:not-allowed}
+
+/* ===== Inputs ===== */
+input, select, datalist{
+  font: inherit;
+}
+input.border{
+  border:1px solid var(--neutral-200);
+  background:#fff;
+}
+input.rounded-xl{border-radius:var(--radius-xl)}
+input:focus{
+  outline:2px solid #0000;
+  box-shadow: 0 0 0 2px rgba(16,185,129,.25);
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
+/* ===== Tarjetas / secciones ===== */
+section.bg-white{background:#fff}
+section.rounded-2xl{border-radius:var(--radius-2xl)}
+section.shadow{box-shadow:var(--shadow)}
+
+/* ===== Tablas ===== */
+table{border-collapse:separate;border-spacing:0;width:100%}
+thead th{
+  font-weight:600;
+  padding:.5rem .5rem;
+  border-bottom:1px solid var(--neutral-200);
+  text-align:left;
 }
-button:hover {
-  border-color: #646cff;
+tbody td{
+  padding:.5rem .5rem;
+  border-bottom:1px solid var(--neutral-200);
 }
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+tr.last\\:border-0 td{border-bottom:0} /* helper para última fila */
+
+/* ===== Layouts responsivos ===== */
+/* sm: min-width 640px */
+@media (min-width:640px){
+  .sm\\:p-6{padding:1.5rem}
+  .sm\\:grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .sm\\:w-60{width:15rem}
+  .sm\\:grid-cols-4.items-end > *{align-self:end}
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
-}
+/* ===== Extras visuales ===== */
+label{color:var(--neutral-700)}
+h1,h2{margin:0}
+h2{margin-bottom:.5rem}
+.table-wrap{overflow:auto}
+
+button.bg-neutral-900:hover{filter:brightness(1.1)}
+button.bg-emerald-600:hover{filter:brightness(1.05)}
+button.border:hover{background:var(--neutral-100)}
