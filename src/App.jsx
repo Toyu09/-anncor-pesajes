@@ -2,11 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
 
-// ANNCOR • PWA Pesaje de Cerdos (MVP)
-// Autor: ChatGPT para Brayan Annicchiarico
-// Fix principal: reemplazar uso de `doc.autoTable(...)` por `autoTable(doc, ...)`
-// y usar import correcto de jsPDF (named export) + import de función `autoTable`.
-// Además, se agregan pruebas (test cases) visibles en UI para validar helpers.
+
 
 // ===================== Utilidades de fecha y formato =====================
 const tz = "America/Bogota";
@@ -108,6 +104,15 @@ export default function App() {
     const doc = new jsPDF({ unit: "pt", format: "a4" });
     const title = scope === "filtered" && filterPig ? `Pesajes – Cerdo ${filterPig}` : "Pesajes – ANNCOR";
 
+    // ===== Agregar imagen arriba a la derecha =====
+    try {
+      const pageWidth = doc.internal.pageSize.getWidth();
+      // ruta a la imagen en carpeta public
+      doc.addImage("/ancordfot.png", "PNG", pageWidth - 100, 20, 80, 40);
+    } catch (e) {
+      console.warn("No se pudo agregar la imagen:", e);
+    }
+
     doc.setFontSize(16);
     doc.text(title, 40, 40);
     doc.setFontSize(10);
@@ -115,11 +120,6 @@ export default function App() {
 
     const head = [["Fecha", "ID Cerdo", "Peso (kg)", "Δ vs. anterior (kg)"]];
     const body = source.map((r) => [fmtDate(r.dateISO), r.pigId, toFixed1(r.weightKg), toDeltaStr(r.deltaKg)]);
-
-    // === Insertar logo ===
-    //const img = new Image();
-    //img.src = "ancordfot.png"; 
-    //doc.addImage(img, "PNG", doc.internal.pageSize.width - 120, 20, 80, 40);
 
     try {
       autoTable(doc, {
@@ -143,7 +143,6 @@ export default function App() {
       });
     } catch (err) {
       console.error("Fallo autoTable, exportando lista simple:", err);
-      // Fallback muy básico en caso extremo
       let y = 90;
       doc.setFontSize(12);
       doc.text("Fecha | ID | Peso (kg) | Δ (kg)", 40, 80);
