@@ -117,9 +117,9 @@ export default function App() {
     const body = source.map((r) => [fmtDate(r.dateISO), r.pigId, toFixed1(r.weightKg), toDeltaStr(r.deltaKg)]);
 
     // === Insertar logo ===
-    const img = new Image();
-    img.src = "ancordfot.png"; 
-    doc.addImage(img, "PNG", doc.internal.pageSize.width - 120, 20, 80, 40);
+    //const img = new Image();
+    //img.src = "ancordfot.png"; 
+    //doc.addImage(img, "PNG", doc.internal.pageSize.width - 120, 20, 80, 40);
 
     try {
       autoTable(doc, {
