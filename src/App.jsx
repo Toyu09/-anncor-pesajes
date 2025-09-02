@@ -116,6 +116,11 @@ export default function App() {
     const head = [["Fecha", "ID Cerdo", "Peso (kg)", "Δ vs. anterior (kg)"]];
     const body = source.map((r) => [fmtDate(r.dateISO), r.pigId, toFixed1(r.weightKg), toDeltaStr(r.deltaKg)]);
 
+    // === Insertar logo ===
+    const img = new Image();
+    img.src = "ancordfot.png"; // si lo guardaste en public/logo.png
+    doc.addImage(img, "PNG", doc.internal.pageSize.width - 120, 20, 80, 40);
+
     try {
       autoTable(doc, {
         head,
