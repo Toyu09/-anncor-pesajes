@@ -99,24 +99,15 @@ export default function App() {
 
   // ===================== Exportar PDF (todo o filtrado) =====================
   const exportPDF = (scope = "all") => {
-  const source = scope === "filtered" ? enriched : withDeltas(records.sort(sortByPigThenDate));
-  if (source.length === 0) {
-    alert("No hay registros para exportar.");
-    return;
-  }
+    const source = scope === "filtered" ? enriched : withDeltas(records.sort(sortByPigThenDate));
+    if (source.length === 0) {
+      alert("No hay registros para exportar.");
+      return;
+    }
 
-  const doc = new jsPDF({ unit: "pt", format: "a4" });
-  const title = scope === "filtered" && filterPig ? `Pesajes – Cerdo ${filterPig}` : "Pesajes – ANNCOR";
+    const doc = new jsPDF({ unit: "pt", format: "a4" });
+    const title = scope === "filtered" && filterPig ? `Pesajes – Cerdo ${filterPig}` : "Pesajes – ANNCOR";
 
-  // === Cargar imagen ===
-  const img = new Image();
-  img.src = "/logo.jpg"; // si está en public/logo.jpg
-
-  img.onload = () => {
-    // Insertar imagen SOLO después de que cargue
-    doc.addImage(img, "JPEG", doc.internal.pageSize.width - 120, 20, 80, 40);
-
-    // Texto
     doc.setFontSize(16);
     doc.text(title, 40, 40);
     doc.setFontSize(10);
@@ -124,6 +115,11 @@ export default function App() {
 
     const head = [["Fecha", "ID Cerdo", "Peso (kg)", "Δ vs. anterior (kg)"]];
     const body = source.map((r) => [fmtDate(r.dateISO), r.pigId, toFixed1(r.weightKg), toDeltaStr(r.deltaKg)]);
+
+    // === Insertar logo ===
+    const img = new Image();
+    img.src = "ancordfot.png"; 
+    doc.addImage(img, "PNG", doc.internal.pageSize.width - 120, 20, 80, 40);
 
     try {
       autoTable(doc, {
@@ -147,6 +143,7 @@ export default function App() {
       });
     } catch (err) {
       console.error("Fallo autoTable, exportando lista simple:", err);
+      // Fallback muy básico en caso extremo
       let y = 90;
       doc.setFontSize(12);
       doc.text("Fecha | ID | Peso (kg) | Δ (kg)", 40, 80);
@@ -157,15 +154,12 @@ export default function App() {
       }
     }
 
-    // Guardar PDF al final
     doc.save(
       scope === "filtered" && filterPig
         ? `Pesajes_${sanitizeFileName(filterPig)}.pdf`
         : `Pesajes_ANNCOR.pdf`
     );
   };
-};
-
 
   // ===================== Pruebas (QA) =====================
   useEffect(() => {
